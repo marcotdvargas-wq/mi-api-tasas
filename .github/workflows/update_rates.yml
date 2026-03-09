@@ -1,0 +1,32 @@
+name: Update Exchange Rates
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Se ejecuta cada hora en punto
+  workflow_dispatch:      # Permite ejecutarlo manualmente para probar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scraper
+        run: python main.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Bot de Tasas"
+          git config --global user.email "bot@github.com"
+          git add data/rates.json
+          git commit -m "Actualización automática: $(date)" || exit 0
+          git push
