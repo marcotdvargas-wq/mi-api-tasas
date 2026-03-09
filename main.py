@@ -30,5 +30,6 @@ def main():
     
     print("¡Archivo rates.json actualizado con éxito!")
 
-if _name_ == "_main_":
+if _-name-_ == "__main__":
     main()
+
