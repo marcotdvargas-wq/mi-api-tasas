@@ -2,7 +2,7 @@ name: Update Exchange Rates
 
 on:
   schedule:
-    - cron: '0 * * * *' # Se ejecuta cada hora en punto
+    - cron: '*/15* * * *' # Se ejecuta cada 15 minutos en punto
   workflow_dispatch:      # Permite ejecutarlo manualmente para probar
 
 jobs:
