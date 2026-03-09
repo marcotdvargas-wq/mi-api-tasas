@@ -1,23 +1,28 @@
 import json
 import os
 from datetime import datetime
-from src.scraper import get_bcv_rate, get_binance_p2p_rate
+from src.scraper import get_bcv_rates, get_binance_p2p_rate
 
 def main():
     print("Iniciando actualización de tasas...")
     
-    bcv = get_bcv_rate()
+    # Obtenemos el diccionario con las dos tasas del BCV
+    bcv = get_bcv_rates()
     binance = get_binance_p2p_rate()
     
     output = {
-        "bcv": bcv,
+        "bcv": {
+            "usd": bcv["usd"],
+            "eur": bcv["eur"]
+        },
         "binance_p2p": binance,
         "last_update": datetime.now().isoformat(),
-        "currency": "VES",
-        "symbol": "Bs."
+        "config": {
+            "currency": "VES",
+            "unit": "Bs."
+        }
     }
     
-    # Asegurar que la carpeta data existe
     os.makedirs('data', exist_ok=True)
     
     with open('data/rates.json', 'w') as f:
@@ -25,5 +30,5 @@ def main():
     
     print("¡Archivo rates.json actualizado con éxito!")
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
