@@ -1,19 +1,26 @@
 import requests
 from bs4 import BeautifulSoup
 
-def get_bcv_rate():
+def get_bcv_rates():
     try:
         url = "https://www.bcv.org.ve/"
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        # verify=False es necesario porque a veces el BCV tiene el certificado vencido
         response = requests.get(url, headers=headers, verify=False, timeout=15)
         soup = BeautifulSoup(response.content, 'html.parser')
         
-        # El BCV usa IDs específicos para cada moneda
-        tasa = soup.find(id="dolar").find("strong").text.strip()
-        return float(tasa.replace(',', '.'))
+        # Extraer Dólar
+        tasa_usd = soup.find(id="dolar").find("strong").text.strip()
+        usd = float(tasa_usd.replace(',', '.'))
+        
+        # Extraer Euro
+        tasa_eur = soup.find(id="euro").find("strong").text.strip()
+        eur = float(tasa_eur.replace(',', '.'))
+        
+        return {"usd": usd, "eur": eur}
     except Exception as e:
         print(f"Error obteniendo BCV: {e}")
-        return None
+        return {"usd": None, "eur": None}
 
 def get_binance_p2p_rate():
     try:
@@ -45,3 +52,4 @@ def get_binance_p2p_rate():
     except Exception as e:
         print(f"Error obteniendo Binance: {e}")
         return None
+
