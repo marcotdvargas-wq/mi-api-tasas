@@ -21,28 +21,27 @@ def get_binance_p2p_rate():
         payload = {
             "asset": "USDT",
             "fiat": "VES",
-            "merchantCheck": True,
+            "merchantCheck": True, # Solo comerciantes verificados (más real)
             "page": 1,
-            "rows": 5, # Bajamos a 5 para agarrar solo los más competitivos
-            "tradeType": "BUY", # "BUY" para el usuario significa "SELL" para el comerciante (tasa alta)
-            "transAmount": "500" # Filtramos para que ignore anuncios de 10 o 20 Bs que bajan el promedio
+            "rows": 10,
+            "payTypes": [], # Puedes poner ["Mercadopago"] o ["Banesco"] si quieres ser más específico
+            "publisherType": "merchant", # Solo anunciantes profesionales
+            "tradeType": "BUY"
         }
         r = requests.post(url, json=payload, timeout=15)
         data = r.json()
         
-        # En lugar de promedio, tomamos el SEGUNDO o TERCER mejor precio 
-        # para evitar "anuncios anzuelo" muy baratos
+        # En lugar de promediar todos, tomamos los 5 mejores precios 
+        # que suelen ser los más cercanos a lo que ves en apps como Monitor
         prices = [float(adv['adv']['price']) for adv in data['data']]
         
         if not prices: return None
         
-        # Opción A: El precio más alto de los primeros 5
-        tasa_referencia = max(prices) 
+        # Opcional: Si quieres que sea un poco más alto (más "paralelo"), 
+        # podemos tomar el precio máximo de los primeros 5 en lugar del promedio.
+        top_prices = prices[:5]
+        return round(max(top_prices), 2) 
         
-        # Opción B: Si aún es bajo, sumamos un pequeño % de comisión operativa (opcional)
-        # tasa_referencia = tasa_referencia * 1.005 
-
-        return round(tasa_referencia, 2)
     except Exception as e:
         print(f"Error obteniendo Binance: {e}")
         return None
