@@ -1,4 +1,4 @@
-def get_binance_p2p_rate():
+def get_binance_p2p_rates():
     try:
         url = "https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search"
         payload = {
@@ -33,5 +33,6 @@ def get_binance_p2p_rate():
     except Exception as e:
         print(f"Error obteniendo Binance: {e}")
         return None
+
 
 
