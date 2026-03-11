@@ -1,15 +1,15 @@
 {
     "bcv": {
-        "usd": 438.205,
-        "eur": 510.2108456
+        "usd": 440.9657,
+        "eur": 510.48835226
     },
-    "binance_p2p": 633.53,
+    "binance_p2p": 631.96,
     "cambio_p2p": {
-        "porcentaje": "0.92%",
-        "estado": "subio",
-        "simbolo": "\u25b2"
+        "porcentaje": "-0.25%",
+        "estado": "bajo",
+        "simbolo": "\u25bc"
     },
-    "last_update": "2026-03-11 20:                                                       %59:00",
+    "last_update": "2026-03-11 21:                                                       %59:00",
     "config": {
         "currency": "VES",
         "unit": "Bs."
