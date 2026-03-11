@@ -30,7 +30,7 @@ def get_binance_p2p_rate():
             "merchantCheck": True, 
             "page": 1,
             "rows": 10,
-            "transAmount": "1000",
+            "transAmount": "10000",
             "publisherType": "merchant",
             "tradeType": "BUY"
         }
@@ -53,3 +53,4 @@ def get_binance_p2p_rate():
     except Exception as e:
         print(f"Error obteniendo Binance: {e}")
         return None
+
