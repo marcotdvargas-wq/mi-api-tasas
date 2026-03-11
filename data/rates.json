@@ -3,11 +3,11 @@
         "usd": 440.9657,
         "eur": 510.48835226
     },
-    "binance_p2p": 630.02,
+    "binance_p2p": 630.9,
     "cambio_p2p": {
-        "porcentaje": "-0.31%",
-        "estado": "bajo",
-        "simbolo": "\u25bc"
+        "porcentaje": "0.14%",
+        "estado": "subio",
+        "simbolo": "\u25b2"
     },
     "last_update": "2026-03-11 22:                                                       %59:00",
     "config": {
