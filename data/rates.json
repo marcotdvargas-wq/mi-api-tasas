@@ -1,13 +1,13 @@
 {
     "bcv": {
-        "usd": 440.9657,
-        "eur": 510.48835226
+        "usd": 443.2587,
+        "eur": 510.34147165
     },
-    "binance_p2p": 628.93,
+    "binance_p2p": 629.67,
     "cambio_p2p": {
-        "porcentaje": "-0.39%",
-        "estado": "bajo",
-        "simbolo": "\u25bc"
+        "porcentaje": "0.12%",
+        "estado": "subio",
+        "simbolo": "\u25b2"
     },
     "last_update": "2026-03-12 21:                                                       %59:00",
     "config": {
