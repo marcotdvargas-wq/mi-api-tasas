@@ -27,6 +27,6 @@ jobs:
         run: |
           git config --global user.name "Bot de Tasas"
           git config --global user.email "bot@github.com"
-          git add data/rates.json
+          git add data/
           git commit -m "Actualización automática: $(date)" || exit 0
           git push
