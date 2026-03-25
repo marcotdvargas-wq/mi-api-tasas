@@ -3,13 +3,13 @@
         "usd": 462.6687,
         "eur": 536.09422269
     },
-    "binance_p2p": 673.21,
+    "binance_p2p": 670.94,
     "cambio_p2p": {
-        "porcentaje": "0.1%",
-        "estado": "subio",
-        "simbolo": "\u25b2"
+        "porcentaje": "-0.34%",
+        "estado": "bajo",
+        "simbolo": "\u25bc"
     },
-    "last_update": "2026-03-25 04:03:03",
+    "last_update": "2026-03-25 06:35:07",
     "config": {
         "currency": "VES",
         "unit": "Bs."
