@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from src.scraper import get_bcv_rates, get_binance_p2p_rate
 
 def main():
-    print("Iniciando actualización de tasas y registro de historial...")
+    print("Iniciando actualización de tasas, historial y radar 24h...")
     
     # 1. Configurar la hora exacta de Venezuela (UTC-4)
     vzla_tz = timezone(timedelta(hours=-4))
@@ -29,7 +29,9 @@ def main():
     if last_price > 0 and current_binance:
         variacion = round(((current_binance - last_price) / last_price) * 100, 2)
 
-    # 5. Guardar el archivo principal (rates.json) - EXACTAMENTE COMO ANTES
+    # ========================================================
+    # 5. EL ARCHIVO PRINCIPAL (rates.json) - INTACTO
+    # ========================================================
     output = {
         "bcv": {
             "usd": bcv.get("usd"),
@@ -53,15 +55,14 @@ def main():
         json.dump(output, f, indent=4)
         
     # ========================================================
-    # 6. NUEVA FUNCIÓN: EL HISTORIAL (El Diario del Robot)
+    # 6. EL HISTORIAL DIARIO (historial.json) - INTACTO
     # ========================================================
+    today_str = now_vzla.strftime("%Y-%m-%d")
+    
     if current_binance and bcv.get("usd"):
-        # Obtenemos la fecha de hoy en formato YYYY-MM-DD (Ej: 2026-03-13)
-        today_str = now_vzla.strftime("%Y-%m-%d")
         historial_path = 'data/historial.json'
-        
         historial_data = {}
-        # Leemos el historial viejo si ya existe
+        
         if os.path.exists(historial_path):
             with open(historial_path, 'r') as f:
                 try:
@@ -69,17 +70,42 @@ def main():
                 except:
                     pass
                     
-        # Anotamos en la libreta el dato de hoy.
-        # Al correr a las 10:00 PM, se guardará este valor.
         historial_data[today_str] = {
             "bcv_usd": bcv.get("usd"),
             "binance_p2p": current_binance,
-            "hora_registro": now_vzla.strftime("%I:%M %p") # Ej: 10:00 PM
+            "hora_registro": now_vzla.strftime("%I:%M %p") 
         }
         
-        # Guardamos la libreta
         with open(historial_path, 'w') as f:
             json.dump(historial_data, f, indent=4)
+
+    # ========================================================
+    # 7. NUEVO: EL RADAR ESTADÍSTICO (tendencias_24h.json)
+    # ========================================================
+    if current_binance:
+        tendencias_path = 'data/tendencias_24h.json'
+        tendencias_data = {}
+        
+        # Leemos el archivo si ya existe para no borrar lo anterior
+        if os.path.exists(tendencias_path):
+            with open(tendencias_path, 'r') as f:
+                try:
+                    tendencias_data = json.load(f)
+                except:
+                    pass
+        
+        # Obtenemos solo la hora y minuto (Ej: "14:20")
+        hora_str = now_vzla.strftime("%H:%M")
+        
+        # Si es un día nuevo, creamos el bloque para ese día
+        if today_str not in tendencias_data:
+            tendencias_data[today_str] = {}
+            
+        # Guardamos el precio exacto en esa hora exacta
+        tendencias_data[today_str][hora_str] = current_binance
+        
+        with open(tendencias_path, 'w') as f:
+            json.dump(tendencias_data, f, indent=4)
             
     # ========================================================
     
