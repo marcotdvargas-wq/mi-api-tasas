@@ -54,3 +54,36 @@ def get_binance_p2p_rate():
         print(f"Error obteniendo Binance: {e}")
         return None
 
+def get_binance_zinli_rate():
+    import requests
+    url = "https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search"
+    headers = {
+        "accept": "*/*",
+        "content-type": "application/json",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    payload = {
+        "fiat": "USD",
+        "page": 1,
+        "rows": 10,
+        "tradeType": "SELL",
+        "asset": "USDT",
+        "countries": [],
+        "payTypes": ["Zinli"],
+        "publisherType": None
+    }
+    try:
+        response = requests.post(url, headers=headers, json=payload, timeout=10)
+        data = response.json()
+        if data and data.get("data"):
+            # Tomamos el promedio de los anuncios 2, 3 y 4 (índices 1, 2, 3) para evitar precios falsos
+            ads = data["data"]
+            if len(ads) >= 4:
+                prices = [float(ad["adv"]["price"]) for ad in ads[1:4]]
+                return round(sum(prices) / len(prices), 3)
+            else:
+                return float(ads[0]["adv"]["price"])
+    except Exception as e:
+        print(f"Error obteniendo Zinli: {e}")
+    return None
+
