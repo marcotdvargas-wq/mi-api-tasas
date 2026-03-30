@@ -32,7 +32,7 @@ def get_binance_p2p_rate(trade_type="BUY"):
             "rows": 10,
             "transAmount": "10000",
             "publisherType": "merchant",
-            "tradeType": trade_type # <--- AHORA ES DINÁMICO
+            "tradeType": trade_type
         }
         r = requests.post(url, json=payload, timeout=15)
         data = r.json()
@@ -66,11 +66,12 @@ def get_binance_zinli_rate(trade_type="SELL"):
             "fiat": "USD",
             "page": 1,
             "rows": 10,
-            "tradeType": trade_type, # <--- AHORA ES DINÁMICO
+            "tradeType": trade_type,
             "asset": "USDT",
             "countries": [],
             "payTypes": ["Zinli"],
-            "publisherType": None
+            "publisherType": None,
+            "transAmount": "1000" # <--- 🔥 ¡AQUÍ ESTÁ EL FILTRO QUE PEDISTE!
         }
         response = requests.post(url, headers=headers, json=payload, timeout=10)
         data = response.json()
