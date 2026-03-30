@@ -21,7 +21,7 @@ def get_bcv_rates():
         print(f"Error obteniendo BCV: {e}")
         return {"usd": None, "eur": None}
 
-def get_binance_p2p_rate():
+def get_binance_p2p_rate(trade_type="BUY"):
     try:
         url = "https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search"
         payload = {
@@ -32,7 +32,7 @@ def get_binance_p2p_rate():
             "rows": 10,
             "transAmount": "10000",
             "publisherType": "merchant",
-            "tradeType": "BUY"
+            "tradeType": trade_type # <--- AHORA ES DINÁMICO
         }
         r = requests.post(url, json=payload, timeout=15)
         data = r.json()
@@ -51,39 +51,37 @@ def get_binance_p2p_rate():
         return None
         
     except Exception as e:
-        print(f"Error obteniendo Binance: {e}")
+        print(f"Error obteniendo Binance VES ({trade_type}): {e}")
         return None
 
-def get_binance_zinli_rate():
-    import requests
-    url = "https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search"
-    headers = {
-        "accept": "*/*",
-        "content-type": "application/json",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
-    payload = {
-        "fiat": "USD",
-        "page": 1,
-        "rows": 10,
-        "tradeType": "SELL",
-        "asset": "USDT",
-        "countries": [],
-        "payTypes": ["Zinli"],
-        "publisherType": None
-    }
+def get_binance_zinli_rate(trade_type="SELL"):
     try:
+        url = "https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search"
+        headers = {
+            "accept": "*/*",
+            "content-type": "application/json",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        }
+        payload = {
+            "fiat": "USD",
+            "page": 1,
+            "rows": 10,
+            "tradeType": trade_type, # <--- AHORA ES DINÁMICO
+            "asset": "USDT",
+            "countries": [],
+            "payTypes": ["Zinli"],
+            "publisherType": None
+        }
         response = requests.post(url, headers=headers, json=payload, timeout=10)
         data = response.json()
         if data and data.get("data"):
-            # Tomamos el promedio de los anuncios 2, 3 y 4 (índices 1, 2, 3) para evitar precios falsos
+            # Tomamos el promedio de los anuncios 2, 3 y 4
             ads = data["data"]
             if len(ads) >= 4:
                 prices = [float(ad["adv"]["price"]) for ad in ads[1:4]]
                 return round(sum(prices) / len(prices), 3)
-            else:
+            elif len(ads) > 0:
                 return float(ads[0]["adv"]["price"])
     except Exception as e:
-        print(f"Error obteniendo Zinli: {e}")
+        print(f"Error obteniendo Zinli ({trade_type}): {e}")
     return None
-
