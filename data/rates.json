@@ -3,16 +3,16 @@
         "usd": 477.1488,
         "eur": 560.04863251
     },
-    "binance_p2p": 630.1,
-    "binance_zinli": 1.003,
-    "binance_p2p_sell": 622.21,
+    "binance_p2p": 631.83,
+    "binance_zinli": 1.005,
+    "binance_p2p_sell": 624.4,
     "binance_zinli_buy": 1.019,
     "cambio_p2p": {
-        "porcentaje": "0.04%",
+        "porcentaje": "0.27%",
         "estado": "subio",
         "simbolo": "\u25b2"
     },
-    "last_update": "2026-04-12 10:45:17",
+    "last_update": "2026-04-12 11:00:19",
     "config": {
         "currency": "VES",
         "unit": "Bs."
