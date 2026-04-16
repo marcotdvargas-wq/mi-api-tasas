@@ -168,5 +168,10 @@
         "bcv_usd": 479.7775,
         "binance_p2p": 628.59,
         "hora_registro": "11:45 PM"
+    },
+    "2026-04-16": {
+        "bcv_usd": 479.7775,
+        "binance_p2p": 628.59,
+        "hora_registro": "12:00 AM"
     }
 }
