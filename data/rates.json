@@ -5,14 +5,14 @@
     },
     "binance_p2p": 676.12,
     "binance_zinli": 0.992,
-    "binance_p2p_sell": 669.33,
-    "binance_zinli_buy": 1.018,
+    "binance_p2p_sell": 668.62,
+    "binance_zinli_buy": 1.016,
     "cambio_p2p": {
-        "porcentaje": "-0.08%",
-        "estado": "bajo",
-        "simbolo": "\u25bc"
+        "porcentaje": "0.0%",
+        "estado": "estable",
+        "simbolo": "\u25ac"
     },
-    "last_update": "2026-05-14 06:45:19",
+    "last_update": "2026-05-14 07:00:20",
     "config": {
         "currency": "VES",
         "unit": "Bs."
