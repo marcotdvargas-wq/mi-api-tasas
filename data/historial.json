@@ -663,5 +663,10 @@
         "bcv_usd": 742.2292,
         "binance_p2p": 886.8,
         "hora_registro": "11:45 PM"
+    },
+    "2026-07-24": {
+        "bcv_usd": 742.2292,
+        "binance_p2p": 888.29,
+        "hora_registro": "12:00 AM"
     }
 }
