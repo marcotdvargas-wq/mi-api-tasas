@@ -30,7 +30,7 @@ def get_binance_p2p_rate(trade_type="BUY"):
             "merchantCheck": True, 
             "page": 1,
             "rows": 10,
-            "transAmount": "10000",
+            "transAmount": "30000",
             "publisherType": "merchant",
             "tradeType": trade_type
         }
