@@ -1,7 +1,7 @@
 {
     "bcv": {
-        "usd": 785.0693,
-        "eur": 916.02670993
+        "usd": null,
+        "eur": null
     },
     "binance_p2p": 935.9,
     "binance_zinli": 1.01,
@@ -12,7 +12,7 @@
         "estado": "estable",
         "simbolo": "\u25ac"
     },
-    "last_update": "2026-08-25 05:30:24",
+    "last_update": "2026-08-25 05:33:08",
     "config": {
         "currency": "VES",
         "unit": "Bs."
