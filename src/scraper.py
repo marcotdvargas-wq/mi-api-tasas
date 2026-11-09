@@ -2,25 +2,50 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_bcv_rates():
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+
+    # INTENTO 1: API JSON rápida (BCV Today - alojada en CDN sin bloqueo en GitHub)
+    try:
+        r1 = requests.get("https://bcv.today/api/v1/rate.json", headers=headers, timeout=10)
+        if r1.status_code == 200:
+            data = r1.json()
+            usd = round(float(data["USD"]), 2)
+            eur = round(float(data["EUR"]), 2)
+            if usd > 0 and eur > 0:
+                return {"usd": usd, "eur": eur}
+    except Exception as e:
+        print(f"Aviso: Falló Fuente 1 BCV (bcv.today): {e}")
+
+    # INTENTO 2: API JSON de respaldo (Crom Studio)
+    try:
+        r2 = requests.get("https://datos.cromstudio.com.ve/tasa", headers=headers, timeout=10)
+        if r2.status_code == 200:
+            tasas = r2.json().get("tasas", {})
+            usd = round(float(tasas["USD"]), 2)
+            eur = round(float(tasas["EUR"]), 2)
+            if usd > 0 and eur > 0:
+                return {"usd": usd, "eur": eur}
+    except Exception as e:
+        print(f"Aviso: Falló Fuente 2 BCV (cromstudio): {e}")
+
+    # INTENTO 3: Scraping directo a bcv.org.ve
     try:
         url = "https://www.bcv.org.ve/"
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         response = requests.get(url, headers=headers, verify=False, timeout=15)
         soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Extraer Dólar
+
         tasa_usd = soup.find(id="dolar").find("strong").text.strip()
-        usd = float(tasa_usd.replace(',', '.'))
-        
-        # Extraer Euro
+        usd = round(float(tasa_usd.replace(',', '.')), 2)
+
         tasa_eur = soup.find(id="euro").find("strong").text.strip()
-        eur = float(tasa_eur.replace(',', '.'))
-        
+        eur = round(float(tasa_eur.replace(',', '.')), 2)
+
         return {"usd": usd, "eur": eur}
     except Exception as e:
-        print(f"Error obteniendo BCV: {e}")
+        print(f"Error obteniendo BCV en las 3 fuentes: {e}")
         return {"usd": None, "eur": None}
-
 def get_binance_p2p_rate(trade_type="BUY"):
     try:
         url = "https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search"
