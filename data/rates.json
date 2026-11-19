@@ -1,18 +1,18 @@
 {
     "bcv": {
-        "usd": 917.7751,
-        "eur": 1007.3958
+        "usd": 918.7662,
+        "eur": 1009.0717
     },
-    "binance_p2p": 1082.32,
+    "binance_p2p": 1083.63,
     "binance_zinli": 1.012,
-    "binance_p2p_sell": 1069.43,
+    "binance_p2p_sell": 1069.56,
     "binance_zinli_buy": 1.022,
     "cambio_p2p": {
-        "porcentaje": "0.0%",
-        "estado": "estable",
-        "simbolo": "\u25ac"
+        "porcentaje": "0.12%",
+        "estado": "subio",
+        "simbolo": "\u25b2"
     },
-    "last_update": "2026-11-19 16:15:13",
+    "last_update": "2026-11-19 16:30:17",
     "config": {
         "currency": "VES",
         "unit": "Bs."
